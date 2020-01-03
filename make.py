@@ -126,6 +126,16 @@ class MiniSpartan6(Board):
     def load(self):
         os.system("xc3sprog -c ftdi build/minispartan6/gateware/top.bit")
 
+# MimasA7 support -----------------------------------------------------------------------------
+
+class MimasA7(Board):
+    def __init__(self):
+        from litex_boards.targets import mimas_a7
+        Board.__init__(self, mimas_a7.BaseSoC, {"serial", "ethernet"})
+
+    def load(self):
+        os.system("openocd -f prog/numato_mimas_a7.cfg -c \"init; pld load 0 build/mimas_a7/gateware/top.bit; shutdown\"")
+
 
 # Pipistrello support -----------------------------------------------------------------------------
 
@@ -206,6 +216,7 @@ supported_boards = {
     "nexys_video":  NexysVideo,
     "minispartan6": MiniSpartan6,
     "pipistrello":  Pipistrello,
+    "mimas_a7":     MimasA7,
     # Lattice
     "versa_ecp5":   VersaECP5,
     "ulx3s":        ULX3S,
